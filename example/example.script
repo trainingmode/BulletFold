@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------------------------------------
--- GameoBbject Properties
+-- GameObject Properties
 go.property("circle_speed", 100)
 go.property("square_speed", 100)
 go.property("diamond_speed", 100)
