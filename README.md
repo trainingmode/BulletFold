@@ -58,7 +58,7 @@
 
 - Spawn Bullets updated using [**go.animate()**] (*Best Performance*):
 
-        bullet_id = bulletfold.spawn(speed, time, position, direction, accuracy, bulletfold.raycast_groups, custom_hit_function)
+        bulletfold.spawn(speed, time, position, direction, accuracy, bulletfold.raycast_groups, custom_hit_function)
 
     or
 
@@ -74,7 +74,7 @@
 
 - Custom Hit Functions:
 
-        local custom_hit_function = function(position, bullet_id, object_id) hitmarker(position) ; bulletfold.delete(bullet_id) end
+        custom_hit_function = function(position, bullet_id, object_id) hitmarker(position) ; bulletfold.delete(bullet_id) end
 
 ### *Update*
 
