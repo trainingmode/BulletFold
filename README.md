@@ -18,7 +18,7 @@
 
 - Multiple Bullet update functions based on spawn parameters.
 
-- Two Bullet movement types: handled by [go.animate()] or updated using [go.set()] (significantly slower).
+- Two Bullet movement types: handled by [**go.animate()**] or updated using [**go.set()**] (significantly slower).
 
 -----
 
@@ -32,26 +32,44 @@
 
 ### *Module*
 
-- `local bulletfold = require "bulletfold_directory.bulletfold"`
+    local bulletfold = require "bulletfold_directory.bulletfold"
 
 ### *Initialize*
 
-- Default Bullet Factory: `bulletfold.factory = "/bullets#factory"`
+1. Default Bullet Factory:
 
-- Default Ray Cast Collsion Groups: `bulletfold.raycast_groups = { hash("collision_group1"), hash("collision_group2") }`
+        bulletfold.factory = "/bullets#factory"
 
-- Default Hit Marker Function: `bulletfold.hitmarker = function(position, bullet_id, object_id) --[[ Function ]] end`
+2. Default Ray Cast Collsion Groups:
+
+        bulletfold.raycast_groups = { hash("collision_group1"), hash("collision_group2") }
+
+3. Default Hit Marker Function:
+
+        bulletfold.hitmarker = function(position, bullet_id, object_id) --[[ Function ]] end
 
 ### *Spawn*
 
-- `local bullet_id = bulletfold.spawn(speed, time, position, direction, accuracy, bulletfold.raycast_groups, custom_hit_function)`
+- Spawn Bullets updated using [**go.animate()**] (Best Performance)
 
-- `bulletfold.spawn(speed, time, position, direction, accuracy, { hash("custom_group1") }, custom_hit_function)`
+        local bullet_id = bulletfold.spawn(speed, time, position, direction, accuracy, bulletfold.raycast_groups, hit_function)
+
+    or
+
+        bulletfold.spawn(speed, time, position, direction, accuracy, { hash("col_group1") }, hit_function)
+
+- Spawn Bullets updated using [**go.set()**]
+
+        local bullet_id = bulletfold.spawn_update(speed, time, position, direction, accuracy, bulletfold.raycast_groups, hit_function)
+
+    or
+
+        bulletfold.spawn_update(speed, time, position, direction, accuracy, { hash("col_group1") }, hit_function)
 
 ### *Update*
 
-- `bulletfold.update(dt)`
+    bulletfold.update(dt)
 
 ### *Delete*
 
-- `bulletfold.delete(bullet_id)`
+    bulletfold.delete(bullet_id)
