@@ -1,0 +1,30 @@
+[project]
+title = BulletFold
+dependencies = 
+
+[library]
+include_dirs = bulletfold
+
+[input]
+game_binding = /example/main.input_bindingc
+
+[bootstrap]
+main_collection = /example/main.collectionc
+render = /builtins/render/default.renderc
+
+[script]
+shared_state = 1
+
+[physics]
+debug = 1
+ray_cast_limit_2d = 2048
+
+[sprite]
+max_count = 2048
+
+[collection]
+max_instances = 2048
+
+[graphics]
+max_debug_vertices = 20000
+
