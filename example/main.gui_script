@@ -1,0 +1,82 @@
+----------------------------------------------------------------------------------------------------
+-- Libraries
+local bulletfold = require "bulletfold.bulletfold"
+
+----------------------------------------------------------------------------------------------------
+-- Properties
+local gui_refresh_rate = 0.06
+
+local bullet_count_node = "bullet_count_text"
+local score_hit_node    = "score_hit_text"
+local score_damage_node = "score_damage_text"
+
+local input_raycast_node  = "control_input_raycast_pie"
+local input_hitmark_node  = "control_input_hitmark_pie"
+local input_profiler_node = "control_input_profiler_pie"
+
+-- Internal Messaging
+local __msg = {}
+__msg.inc_object_hit = hash("object_hit")
+__msg.inc_raycasting = hash("raycasting")
+__msg.inc_hitmarking = hash("hitmarking")
+__msg.inc_profiling  = hash("profiling")
+
+----------------------------------------------------------------------------------------------------
+-- Functions
+----------------------------------------------------------------------------------------------------
+
+--
+-- Sets the transparecy of the input GUI Node.
+--
+local function set_node_alpha(node, alpha)
+	local node_color = gui.get_color(node)
+	node_color.w = alpha
+	gui.set_color(node, node_color)
+end
+
+----------------------------------------------------------------------------------------------------
+-- Script
+----------------------------------------------------------------------------------------------------
+
+--
+-- Initialization
+--
+function init(self)
+	-- GUI Properties
+	self.hit_score = 0
+
+	-- Initialize the Internal GUI
+	bullet_count_node = gui.get_node(bullet_count_node)
+	score_hit_node    = gui.get_node(score_hit_node)
+	score_damage_node = gui.get_node(score_damage_node)
+	input_raycast_node  = gui.get_node(input_raycast_node)
+	input_hitmark_node  = gui.get_node(input_hitmark_node)
+	input_profiler_node = gui.get_node(input_profiler_node)
+
+	-- Bullet Count Text Auto-Update
+	timer.delay(gui_refresh_rate, true -- Begin the GUI Update Timer, Refresh the BulletFold Buffer Count Text Node
+		, function(self, handle, elapsed) gui.set_text(bullet_count_node, bulletfold.bullet_count) end)
+end
+
+--
+-- Messaging
+--
+function on_message(self, message_id, message, sender)
+	----------------------------------------------------------------------------------------------------
+	-- Bullet Hit an Object, Increase the Hit Score
+	if message_id == __msg.inc_object_hit then
+		self.hit_score = 1+self.hit_score
+		gui.set_text(score_hit_node, self.hit_score)
+	
+	----------------------------------------------------------------------------------------------------
+	-- Ray Cast Indicator
+	elseif message_id == __msg.inc_raycasting then
+		set_node_alpha(input_raycast_node, message.enabled and 1 or 0)
+	-- Hit Marker Indicator
+	elseif message_id == __msg.inc_hitmarking then
+		set_node_alpha(input_hitmark_node, message.enabled and 1 or 0)
+	-- Profiler Indicator
+	elseif message_id == __msg.inc_profiling then
+		set_node_alpha(input_profiler_node, message.enabled and 1 or 0)
+	end
+end

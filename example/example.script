@@ -1,0 +1,52 @@
+----------------------------------------------------------------------------------------------------
+-- GameoBbject Properties
+go.property("circle_speed", 100)
+go.property("square_speed", 100)
+go.property("diamond_speed", 100)
+
+----------------------------------------------------------------------------------------------------
+-- Internal Properties
+local hit_box_round_go = "hit_box_round"
+local hit_box_square_go = "hit_box_square"
+local hit_box_diamond_go = "hit_box_diamond"
+
+-- Internal Messaging
+local __msg = {}
+__msg.prop_position = "position"
+__msg.prop_rotation = "rotation.z"
+
+----------------------------------------------------------------------------------------------------
+-- Functions
+----------------------------------------------------------------------------------------------------
+
+--
+-- Animates the [hit_box_diamond_go] GameObject position in a diamond pattern.
+--
+local function tales_of_the_traveling_hit_box(self, url, property)
+	-- Rotate the Direction the Hit Box is Traveling by 90 Degrees
+	self.hit_box_direction.x, self.hit_box_direction.y = self.hit_box_direction.x * 0.707106781 - self.hit_box_direction.y * 0.707106781, self.hit_box_direction.x * 0.707106781 + self.hit_box_direction.y * 0.707106781
+	-- Animate the Hit Box Position Towards the New Direction
+	go.animate(hit_box_diamond_go, __msg.prop_position, go.PLAYBACK_ONCE_FORWARD, go.get(hit_box_diamond_go, __msg.prop_position) - self.hit_box_direction, go.EASING_INOUTELASTIC, 400 / self.diamond_speed, 0, tales_of_the_traveling_hit_box)
+end
+
+----------------------------------------------------------------------------------------------------
+-- Script
+----------------------------------------------------------------------------------------------------
+
+--
+-- Initialization
+--
+function init(self)
+	self.hit_box_direction = vmath.vector3(100, 0, 0)
+
+	-- Initialize Internal GameObjects
+	hit_box_round_go = msg.url(nil, hit_box_round_go, nil)
+	hit_box_square_go = msg.url(nil, hit_box_square_go, nil)
+	hit_box_diamond_go = msg.url(nil, hit_box_diamond_go, nil)
+
+	-- Uniquely Animate Each Target GameObject
+	go.animate(hit_box_round_go, __msg.prop_position, go.PLAYBACK_LOOP_PINGPONG, go.get(hit_box_round_go, __msg.prop_position) + vmath.vector3(200, 200, 0), go.EASING_INOUTBOUNCE, 800 / self.circle_speed)
+	go.animate(hit_box_square_go, __msg.prop_position, go.PLAYBACK_LOOP_PINGPONG, go.get(hit_box_square_go, __msg.prop_position) - vmath.vector3(200, 0, 0), go.EASING_INOUTCIRC, 400 / self.square_speed)
+	go.animate(hit_box_diamond_go, __msg.prop_rotation, go.PLAYBACK_LOOP_PINGPONG, vmath.quat_rotation_z(math.pi * 1.5).z, go.EASING_INOUTBOUNCE, 800 / self.diamond_speed)
+	tales_of_the_traveling_hit_box(self)
+end
