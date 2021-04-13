@@ -26,7 +26,7 @@ __msg.inc_profiling  = hash("profiling")
 ----------------------------------------------------------------------------------------------------
 
 --
--- Sets the transparecy of the input GUI Node.
+-- Sets the transparency of the input GUI Node.
 --
 local function set_node_alpha(node, alpha)
 	local node_color = gui.get_color(node)
