@@ -12,6 +12,7 @@ local hit_box_diamond_go = "hit_box_diamond"
 
 -- Internal Messaging
 local __msg = {}
+-- Message Property IDs
 __msg.prop_position = "position"
 __msg.prop_rotation = "rotation.z"
 
@@ -20,13 +21,13 @@ __msg.prop_rotation = "rotation.z"
 ----------------------------------------------------------------------------------------------------
 
 --
--- Animates the [hit_box_diamond_go] GameObject position in a diamond pattern.
+-- Animates the [hit_box_diamond_go] GameObject position in an octagonal pattern.
 --
 local function tales_of_the_traveling_hit_box(self, url, property)
-	-- Rotate the Direction the Hit Box is Traveling by 90 Degrees
-	self.hit_box_direction.x, self.hit_box_direction.y = self.hit_box_direction.x * 0.707106781 - self.hit_box_direction.y * 0.707106781, self.hit_box_direction.x * 0.707106781 + self.hit_box_direction.y * 0.707106781
+	-- Rotate the Direction the Hit Box is Traveling by 45 Degrees
+	self.diamond_direction.x, self.diamond_direction.y = self.diamond_direction.x * 0.707106781 - self.diamond_direction.y * 0.707106781, self.diamond_direction.x * 0.707106781 + self.diamond_direction.y * 0.707106781
 	-- Animate the Hit Box Position Towards the New Direction
-	go.animate(hit_box_diamond_go, __msg.prop_position, go.PLAYBACK_ONCE_FORWARD, go.get(hit_box_diamond_go, __msg.prop_position) - self.hit_box_direction, go.EASING_INOUTELASTIC, 400 / self.diamond_speed, 0, tales_of_the_traveling_hit_box)
+	go.animate(hit_box_diamond_go, __msg.prop_position, go.PLAYBACK_ONCE_FORWARD, go.get(hit_box_diamond_go, __msg.prop_position) - self.diamond_direction, go.EASING_INOUTELASTIC, 400 / self.diamond_speed, 0, tales_of_the_traveling_hit_box)
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -37,7 +38,7 @@ end
 -- Initialization
 --
 function init(self)
-	self.hit_box_direction = vmath.vector3(100, 0, 0)
+	self.diamond_direction = vmath.vector3(100, 0, 0)
 
 	-- Initialize Internal GameObjects
 	hit_box_round_go = msg.url(nil, hit_box_round_go, nil)
