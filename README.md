@@ -12,7 +12,7 @@
 
 - Per Bullet ray casting and Collision Groups.
 
-- Per Bullet hit function behaviour.
+- Per Bullet hit function and hit marker behaviour.
 
 - Per Bullet update behaviour.
 
@@ -28,7 +28,13 @@
 
 -----
 
-## **Quick Setup**
+## **USAGE**
+
+*TO DO...*
+
+-----
+
+## **Quick Start Guide**
 
 ### *Module*
 
@@ -50,21 +56,25 @@
 
 ### *Spawn*
 
-- Spawn Bullets updated using [**go.animate()**] (Best Performance)
+- Spawn Bullets updated using [**go.animate()**] (*Best Performance*):
 
-        local bullet_id = bulletfold.spawn(speed, time, position, direction, accuracy, bulletfold.raycast_groups, hit_function)
-
-    or
-
-        bulletfold.spawn(speed, time, position, direction, accuracy, { hash("col_group1") }, hit_function)
-
-- Spawn Bullets updated using [**go.set()**]
-
-        local bullet_id = bulletfold.spawn_update(speed, time, position, direction, accuracy, bulletfold.raycast_groups, hit_function)
+        local bullet_id = bulletfold.spawn(speed, time, position, direction, accuracy, bulletfold.raycast_groups, custom_hit_function)
 
     or
 
-        bulletfold.spawn_update(speed, time, position, direction, accuracy, { hash("col_group1") }, hit_function)
+        bulletfold.spawn(speed, time, position, direction, accuracy, { hash("col_group1") }, custom_hit_function)
+
+- Spawn Bullets updated using [**go.set()**]:
+
+        local bullet_id = bulletfold.spawn_update(speed, time, position, direction, accuracy, bulletfold.raycast_groups, custom_hit_function)
+
+    or
+
+        bulletfold.spawn_update(speed, time, position, direction, accuracy, { hash("col_group1") }, custom_hit_function)
+
+- Custom Hit Functions:
+
+        local custom_hit_function = function(position, bullet_id, object_id) hitmarker(position) ; bulletfold.delete(bullet_id) end
 
 ### *Update*
 
