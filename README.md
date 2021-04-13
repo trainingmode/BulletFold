@@ -28,13 +28,13 @@
 
 -----
 
-## **Usage**
+## **Guide**
 
 *TO DO...*
 
 -----
 
-## **Quick Start Guide**
+## **Quick Start**
 
 ### *Module*
 
