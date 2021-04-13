@@ -58,19 +58,19 @@
 
 - Spawn Bullets updated using [**go.animate()**] (*Best Performance*):
 
-        local bullet_id = bulletfold.spawn(speed, time, position, direction, accuracy, bulletfold.raycast_groups, custom_hit_function)
+        bullet_id = bulletfold.spawn(speed, time, position, direction, accuracy, bulletfold.raycast_groups, custom_hit_function)
 
     or
 
-        bulletfold.spawn(speed, time, position, direction, accuracy, { hash("col_group1") }, custom_hit_function)
+        bullet_id = bulletfold.spawn(speed, time, position, direction, accuracy, { hash("col_group1") }, custom_hit_function)
 
 - Spawn Bullets updated using [**go.set()**]:
 
-        local bullet_id = bulletfold.spawn_update(speed, time, position, direction, accuracy, bulletfold.raycast_groups, custom_hit_function)
+        bullet_id = bulletfold.spawn_update(speed, time, position, direction, accuracy, bulletfold.raycast_groups, custom_hit_function)
 
     or
 
-        bulletfold.spawn_update(speed, time, position, direction, accuracy, { hash("col_group1") }, custom_hit_function)
+        bullet_id = bulletfold.spawn_update(speed, time, position, direction, accuracy, { hash("col_group1") }, custom_hit_function)
 
 - Custom Hit Functions:
 
