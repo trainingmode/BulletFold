@@ -90,7 +90,7 @@ local bulletfold = require "bulletfold_directory.bulletfold"
 
     - [***accuracy***] `double` The Bullet accuracy, used to randomize the direction. 0 for perfect accuracy.
 
-    - [**raycast_groups**] `hash table` The Collision Groups the Bullet ray cast can collide with. `bulletfold.raycast_groups` *or* `{ hash("col_group1") }`.
+    - [***raycast_groups***] `hash table` The Collision Groups the Bullet ray cast can collide with. `bulletfold.raycast_groups` *or* `{ hash("col_group1") }`.
 
     - [***hit_function***] `function` (**Optional**) The function called when the Bullet hits an object. Default calls the Bullet Hit Marker function and deletes the Bullet.
 
@@ -110,7 +110,7 @@ local bulletfold = require "bulletfold_directory.bulletfold"
 
     - [***time***] `double` The Bullet life time.
 
-    - [**position**] `vmath.vector3` The Bullet spawn position.
+    - [***position***] `vmath.vector3` The Bullet spawn position.
 
     - [***direction***] `vmath.vector3` The Bullet travel direction.
 
