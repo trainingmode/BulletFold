@@ -38,48 +38,128 @@
 
 ### *Module*
 
-    local bulletfold = require "bulletfold_directory.bulletfold"
+```lua
+local bulletfold = require "bulletfold_directory.bulletfold"
+```
 
 ### *Initialize*
 
 1. Default Bullet Factory:
 
-        bulletfold.factory = "/bullets#factory"
+    ```lua
+    bulletfold.factory = "/bullets#factory"
+    ```
 
 2. Default Ray Cast Collsion Groups:
 
-        bulletfold.raycast_groups = { hash("collision_group1"), hash("collision_group2") }
+    ```lua
+    bulletfold.raycast_groups = { hash("collision_group1"), hash("collision_group2") }
+    ```
 
 3. Default Hit Marker Function:
 
-        bulletfold.hitmarker = function(position, bullet_id, object_id) --[[ Function ]] end
+    ```lua
+    bulletfold.hitmarker = function(position, bullet_id, object_id) --[[ Function ]] end
+    ```
+
+    *Parameters*
+
+    - [**position**] `vmath.vector3` The Bullet collision position.
+
+    - [**bullet_id**] `hash` The Bullet GameObject ID.
+
+    - [**object_id**] `hash` The ID of the GameObject the Bullet collided with.
 
 ### *Spawn*
 
 - Spawn Bullets updated using [**go.animate()**] (*Best Performance*):
 
-        bulletfold.spawn(speed, time, position, direction, accuracy, bulletfold.raycast_groups, custom_hit_function)
+    ```lua
+    bulletfold.spawn(speed, time, position, direction, accuracy, raycast_groups, hit_function)
+    ```
 
-    or
+    *Parameters*
 
-        bulletfold.spawn(speed, time, position, direction, accuracy, { hash("col_group1") }, custom_hit_function)
+    - [**speed**] `double` The Bullet speed.
 
-- Spawn Bullets updated using [**go.set()**]:
+    - [**time**] `double` The Bullet life time.
 
-        bulletfold.spawn_update(speed, time, position, direction, accuracy, bulletfold.raycast_groups, custom_hit_function)
+    - [**position**] `vmath.vector3` The Bullet spawn position.
 
-    or
+    - [**direction**] `vmath.vector3` The Bullet travel direction.
 
-        bulletfold.spawn_update(speed, time, position, direction, accuracy, { hash("col_group1") }, custom_hit_function)
+    - [**accuracy**] `double` The Bullet accuracy, used to randomize the direction. 0 for perfect accuracy.
+
+    - [**raycast_groups**] `hash table` The Collision Groups the Bullet ray cast can collide with. `bulletfold.raycast_groups` *or* `{ hash("col_group1") }`.
+
+    - [**hit_function**] `function` (**Optional**) The function called when the Bullet hits an object. Default calls the Bullet Hit Marker function and deletes the Bullet.
+
+    *Returns*
+
+    - [**bullet_id**] `hash` The Bullet GameObject ID.
+
+- Spawn Bullets updated using [**go.set()**] (*Slow*):
+
+    ```lua
+    bulletfold.spawn_update(speed, time, position, direction, accuracy, raycast_groups, hit_function)
+    ```
+
+    *Parameters*
+
+    - [**speed**] `double` The Bullet speed.
+
+    - [**time**] `double` The Bullet life time.
+
+    - [**position**] `vmath.vector3` The Bullet spawn position.
+
+    - [**direction**] `vmath.vector3` The Bullet travel direction.
+
+    - [**accuracy**] `double` The Bullet accuracy, used to randomize the direction. 0 for perfect accuracy.
+
+    - [**raycast_groups**] `hash table` The Collision Groups the Bullet ray cast can collide with. `bulletfold.raycast_groups` *or* `{ hash("col_group1") }`.
+
+    - [**hit_function**] `function` (**Optional**) The function called when the Bullet hits an object. Default calls the Bullet Hit Marker function and deletes the Bullet.
+
+    *Returns*
+
+    - [**bullet_id**] `hash` The Bullet GameObject ID.
 
 - Custom Hit Functions:
 
-        custom_hit_function = function(position, bullet_id, object_id) hitmarker(position) ; bulletfold.delete(bullet_id) end
+    ```lua
+    hit_function = function(position, bullet_id, object_id) hitmarker(position) ; bulletfold.delete(bullet_id) end
+    ```
+
+    *Parameters*
+
+    - [**position**] `vmath.vector3` The Bullet collision position.
+
+    - [**bullet_id**] `hash` The Bullet GameObject ID.
+
+    - [**object_id**] `hash` The ID of the GameObject the Bullet collided with.
 
 ### *Update*
 
-    bulletfold.update(dt)
+ ```lua
+ bulletfold.update(dt)
+ ```
+
+*Parameters*
+
+- [**dt**] `double` The time elapsed since the previous frame.
 
 ### *Delete*
 
-    bulletfold.delete(bullet_id)
+```lua
+bulletfold.delete(bullet_id)
+```
+
+*Parameters*
+
+- [**bullet_id**] `hash` The Bullet GameObject ID.
+
+-----
+
+## Credits
+
+BulletFold is based on [DefBullet](https://github.com/subsoap/defbullet) by [SubSoap](https://github.com/subsoap).
