@@ -11,7 +11,7 @@ go.property("bullet_life_time", 2)
 go.property("bullet_accuracy", 0.001) --0.00025
 go.property("bullet_burst", 17) --6
 go.property("bullet_raycast", true)
-go.property("bullet_hitmaker", true)
+go.property("bullet_hitmarker", true)
 go.property("bullet_count_max", 2000) -- Maximum Amount of Bullets Spawnable Before Hitting Max Engine Counts (Remove Once Optimized per Use Case)
 --go.property("bullet_spawn_anim", true) -- (Unused) Spawn Bullets Updated Using [go.animate()], False to Spawn Bullets Updated Using [go.set()] (Significantly Slower)
 
@@ -180,11 +180,11 @@ function on_input(self, action_id, action)
 		msg.post(__msg.id_bulletfold_gui, __msg.out_raycasting, { enabled = self.bullet_raycast })
 	-- Bullet Hit Markers
 	elseif action_id == __ctrl.debug_hitmark and action.pressed then
-		if self.bullet_hitmaker then bulletfold.hitmarker = function() end
+		if self.bullet_hitmarker then bulletfold.hitmarker = function() end
 		else bulletfold.hitmarker = self.hitmarker end
-		self.bullet_hitmaker = not(self.bullet_hitmaker)
+		self.bullet_hitmarker = not(self.bullet_hitmarker)
 		-- Update the GUI Hit Marker Indicator
-		msg.post(__msg.id_bulletfold_gui, __msg.out_hitmarking, { enabled = self.bullet_hitmaker })
+		msg.post(__msg.id_bulletfold_gui, __msg.out_hitmarking, { enabled = self.bullet_hitmarker })
 	-- BulletFold Example Parameters
 	elseif action_id == __ctrl.debug_oldlib and action.pressed then
 		-- Set the Old DefBullet Example Parameters
