@@ -4,7 +4,7 @@
 
 -----
 
-![BulletFold Demo](example/gfx/bulletfold_demo.jpg "BulletFold Demo")
+![BulletFold Demo](example/gfx/bulletfold_demo.png "BulletFold Demo")
 
 -----
 
@@ -32,30 +32,26 @@
 
 ### *Module*
 
-1.  local bulletfold = require "bulletfold_directory.bulletfold"
+- `local bulletfold = require "bulletfold_directory.bulletfold"`
 
 ### *Initialize*
 
-2.  bulletfold.factory = "/bullets#factory"
+- Default Bullet Factory: `bulletfold.factory = "/bullets#factory"`
 
-3. a. (**Enable**)  bulletfold.raycast_groups = { hash("collision_group1"), hash("collision_group2") }
+- Default Ray Cast Collsion Groups: `bulletfold.raycast_groups = { hash("collision_group1"), hash("collision_group2") }`
 
-3. b. (**Disable**) bulletfold.raycast_groups = nil
-
-4. a. (**Enable**)  bulletfold.hitmarker = function(position, bullet_id, object_id) --[[ Function ]] end
-
-4. b. (**Disable**) bulletfold.hitmarker = nil
+- Default Hit Marker Function: `bulletfold.hitmarker = function(position, bullet_id, object_id) --[[ Function ]] end`
 
 ### *Spawn*
 
-5. a. bullet_id = bulletfold.spawn(speed, time, position, direction, accuracy, bulletfold.raycast_groups, custom_hit_function)
+- `local bullet_id = bulletfold.spawn(speed, time, position, direction, accuracy, bulletfold.raycast_groups, custom_hit_function)`
 
-5. b. bullet_id = bulletfold.spawn(speed, time, position, direction, accuracy, { hash("custom_group1") }, custom_hit_function)
+- `bulletfold.spawn(speed, time, position, direction, accuracy, { hash("custom_group1") }, custom_hit_function)`
 
 ### *Update*
 
-6.  bulletfold.update(dt)
+- `bulletfold.update(dt)`
 
 ### *Delete*
 
-7.  bulletfold.delete(bullet_id)
+- `bulletfold.delete(bullet_id)`
