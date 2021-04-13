@@ -10,6 +10,8 @@
 
 ## **Features**
 
+- Single, central Bullet handler module.
+
 - Per Bullet ray casting and Collision Groups.
 
 - Per Bullet hit function and hit marker behaviour.
