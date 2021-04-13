@@ -64,11 +64,11 @@ local bulletfold = require "bulletfold_directory.bulletfold"
 
     *Parameters*
 
-    - [**position**] `vmath.vector3` The Bullet collision position.
+    - [***position***] `vmath.vector3` The Bullet collision position.
 
-    - [**bullet_id**] `hash` The Bullet GameObject ID.
+    - [***bullet_id***] `hash` The Bullet GameObject ID.
 
-    - [**object_id**] `hash` The ID of the GameObject the Bullet collided with.
+    - [***object_id***] `hash` The ID of the GameObject the Bullet collided with.
 
 ### *Spawn*
 
@@ -80,23 +80,23 @@ local bulletfold = require "bulletfold_directory.bulletfold"
 
     *Parameters*
 
-    - [**speed**] `double` The Bullet speed.
+    - [***speed***] `double` The Bullet speed.
 
-    - [**time**] `double` The Bullet life time.
+    - [***time***] `double` The Bullet life time.
 
-    - [**position**] `vmath.vector3` The Bullet spawn position.
+    - [***position***] `vmath.vector3` The Bullet spawn position.
 
-    - [**direction**] `vmath.vector3` The Bullet travel direction.
+    - [***direction***] `vmath.vector3` The Bullet travel direction.
 
-    - [**accuracy**] `double` The Bullet accuracy, used to randomize the direction. 0 for perfect accuracy.
+    - [***accuracy***] `double` The Bullet accuracy, used to randomize the direction. 0 for perfect accuracy.
 
     - [**raycast_groups**] `hash table` The Collision Groups the Bullet ray cast can collide with. `bulletfold.raycast_groups` *or* `{ hash("col_group1") }`.
 
-    - [**hit_function**] `function` (**Optional**) The function called when the Bullet hits an object. Default calls the Bullet Hit Marker function and deletes the Bullet.
+    - [***hit_function***] `function` (**Optional**) The function called when the Bullet hits an object. Default calls the Bullet Hit Marker function and deletes the Bullet.
 
     *Returns*
 
-    - [**bullet_id**] `hash` The Bullet GameObject ID.
+    - [***bullet_id***] `hash` The Bullet GameObject ID.
 
 - Spawn Bullets updated using [**go.set()**] (*Slow*):
 
@@ -106,23 +106,23 @@ local bulletfold = require "bulletfold_directory.bulletfold"
 
     *Parameters*
 
-    - [**speed**] `double` The Bullet speed.
+    - [***speed***] `double` The Bullet speed.
 
-    - [**time**] `double` The Bullet life time.
+    - [***time***] `double` The Bullet life time.
 
     - [**position**] `vmath.vector3` The Bullet spawn position.
 
-    - [**direction**] `vmath.vector3` The Bullet travel direction.
+    - [***direction***] `vmath.vector3` The Bullet travel direction.
 
-    - [**accuracy**] `double` The Bullet accuracy, used to randomize the direction. 0 for perfect accuracy.
+    - [***accuracy***] `double` The Bullet accuracy, used to randomize the direction. 0 for perfect accuracy.
 
-    - [**raycast_groups**] `hash table` The Collision Groups the Bullet ray cast can collide with. `bulletfold.raycast_groups` *or* `{ hash("col_group1") }`.
+    - [***raycast_groups***] `hash table` The Collision Groups the Bullet ray cast can collide with. `bulletfold.raycast_groups` *or* `{ hash("col_group1") }`.
 
-    - [**hit_function**] `function` (**Optional**) The function called when the Bullet hits an object. Default calls the Bullet Hit Marker function and deletes the Bullet.
+    - [***hit_function***] `function` (**Optional**) The function called when the Bullet hits an object. Default calls the Bullet Hit Marker function and deletes the Bullet.
 
     *Returns*
 
-    - [**bullet_id**] `hash` The Bullet GameObject ID.
+    - [***bullet_id***] `hash` The Bullet GameObject ID.
 
 - Custom Hit Functions:
 
@@ -132,11 +132,11 @@ local bulletfold = require "bulletfold_directory.bulletfold"
 
     *Parameters*
 
-    - [**position**] `vmath.vector3` The Bullet collision position.
+    - [***position***] `vmath.vector3` The Bullet collision position.
 
-    - [**bullet_id**] `hash` The Bullet GameObject ID.
+    - [***bullet_id***] `hash` The Bullet GameObject ID.
 
-    - [**object_id**] `hash` The ID of the GameObject the Bullet collided with.
+    - [***object_id***] `hash` The ID of the GameObject the Bullet collided with.
 
 ### *Update*
 
@@ -146,7 +146,7 @@ local bulletfold = require "bulletfold_directory.bulletfold"
 
 *Parameters*
 
-- [**dt**] `double` The time elapsed since the previous frame.
+- [***dt***] `double` The time elapsed since the previous frame.
 
 ### *Delete*
 
@@ -156,7 +156,7 @@ bulletfold.delete(bullet_id)
 
 *Parameters*
 
-- [**bullet_id**] `hash` The Bullet GameObject ID.
+- [***bullet_id***] `hash` The Bullet GameObject ID.
 
 -----
 
