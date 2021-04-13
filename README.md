@@ -62,15 +62,15 @@
 
     or
 
-        bullet_id = bulletfold.spawn(speed, time, position, direction, accuracy, { hash("col_group1") }, custom_hit_function)
+        bulletfold.spawn(speed, time, position, direction, accuracy, { hash("col_group1") }, custom_hit_function)
 
 - Spawn Bullets updated using [**go.set()**]:
 
-        bullet_id = bulletfold.spawn_update(speed, time, position, direction, accuracy, bulletfold.raycast_groups, custom_hit_function)
+        bulletfold.spawn_update(speed, time, position, direction, accuracy, bulletfold.raycast_groups, custom_hit_function)
 
     or
 
-        bullet_id = bulletfold.spawn_update(speed, time, position, direction, accuracy, { hash("col_group1") }, custom_hit_function)
+        bulletfold.spawn_update(speed, time, position, direction, accuracy, { hash("col_group1") }, custom_hit_function)
 
 - Custom Hit Functions:
 
