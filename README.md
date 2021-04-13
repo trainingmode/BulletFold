@@ -8,6 +8,20 @@
 
 -----
 
+## **Features**
+
+- Per Bullet ray casting and Collision Groups.
+
+- Per Bullet hit function behaviour.
+
+- Per Bullet update behaviour.
+
+- Multiple Bullet update functions based on spawn parameters.
+
+- Two Bullet movement types: handled by [go.animate()] or updated using [go.set()] (significantly slower).
+
+-----
+
 ## **Installation**
 
 *TO DO...*
