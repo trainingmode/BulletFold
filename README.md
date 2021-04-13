@@ -4,7 +4,7 @@
 
 -----
 
-![alt text](example/gfx/bulletfold_demo.png "BulletFold Demo")
+![BulletFold Demo](example/gfx/bulletfold_demo.png "BulletFold Demo")
 
 -----
 
