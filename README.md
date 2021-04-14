@@ -36,6 +36,8 @@
 
 ## **Quick Start**
 
+Please see the **[quick_start.script_snippet](quick_start.script_snippet)** for a basic implementation.
+
 ### *GameObjects*
 
 - **Bullets**: Create a GameObject named "*bullets*" and create a Factory component named "*factory*" within the GameObject.
