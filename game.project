@@ -20,10 +20,10 @@ debug = 1
 ray_cast_limit_2d = 2048
 
 [sprite]
-max_count = 2048
+max_count = 4096
 
 [collection]
-max_instances = 2048
+max_instances = 4096
 
 [graphics]
 max_debug_vertices = 20000
