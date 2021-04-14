@@ -38,17 +38,9 @@
 
 ### *GameObjects*
 
-- Bullets:
+- **Bullets**: Create a GameObject named "*bullets*" and create a Factory component named "*factory*" within the GameObject.
 
-    1. Create a GameObject named "*bullets*".
-    
-    2. Create a Factory component named "*factory*" within the "*bullets*" GameObject.
-
-- Hit Markers:
-
-    1. Create a GameObject named "*hit_marker*".
-    
-    2. Create a Factory component named "*factory*" within the "*hit_marker*" GameObject.
+- **Hit Marker**s: Create a GameObject named "*hit_marker*" and create a Factory component named "*factory*" within the GameObject.
 
 ### *Module*
 
