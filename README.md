@@ -10,11 +10,11 @@
 
 ## **Features**
 
-- Single, central Bullet handler module.
+- Central Bullet handler module.
 
 - Per Bullet ray casting and Collision Groups.
 
-- Per Bullet hit function and hit marker behaviour.
+- Per Bullet hit functions and hit marker functions.
 
 - Per Bullet update behaviour.
 
