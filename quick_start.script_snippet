@@ -13,6 +13,6 @@ end
 function on_input(self, action_id, action)
     -- Spawn a Bullet
     if action_id == hash("fire_bullet") then
-        bulletfold.spawn(400, 2, self.position, self.aim, self.accuracy, { hash("default1") , hash("default2") })
+        bulletfold.spawn(400, 2, self.position, self.aim, self.accuracy, { hash("col_group1") , hash("col_group2") })
     end
 end
