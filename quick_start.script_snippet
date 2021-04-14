@@ -1,0 +1,18 @@
+function init(self)
+    -- Default BulletFold Hit Marker
+    bulletfold.hitmarker = function(position, bullet_id, object_id)
+        print("Bullet "..bullet_id.." hit "..object_id)
+    end
+end
+
+function update(self, dt)
+	-- Update the BulletFold Buffer
+	bulletfold.update(dt)
+end
+
+function on_input(self, action_id, action)
+    -- Spawn a Bullet
+    if action_id == hash("fire_bullet") then
+		bulletfold.spawn(400, 2, self.position, self.aim, self.accuracy, { hash("default1") , hash("default2") })
+	end
+end
