@@ -78,7 +78,7 @@ local bulletfold = require "bulletfold_directory.bulletfold"
 
 ### *Spawn*
 
-- Spawn Bullets updated using [**go.animate()**] (*Best Performance*):
+- Spawn a Bullet updated using [**go.animate()**] (*Best Performance*):
 
     ```lua
     bulletfold.spawn(speed, time, position, direction, accuracy, raycast_groups, hit_function)
@@ -104,7 +104,7 @@ local bulletfold = require "bulletfold_directory.bulletfold"
 
     - [***bullet_id***] `hash` The Bullet GameObject ID.
 
-- Spawn Bullets updated using [**go.set()**] (*Slow*):
+- Spawn a Bullet updated using [**go.set()**] (*Slow*):
 
     ```lua
     bulletfold.spawn_update(speed, time, position, direction, accuracy, raycast_groups, hit_function)
@@ -146,6 +146,8 @@ local bulletfold = require "bulletfold_directory.bulletfold"
 
 ### *Update*
 
+- Updates the BulletFold buffer.
+
  ```lua
  bulletfold.update(dt)
  ```
@@ -155,6 +157,8 @@ local bulletfold = require "bulletfold_directory.bulletfold"
 - [***dt***] `double` The time elapsed since the previous frame.
 
 ### *Delete*
+
+- Deletes a Bullet and removes it from the BulletFold buffer.
 
 ```lua
 bulletfold.delete(bullet_id)
