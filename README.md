@@ -102,7 +102,7 @@ bulletfold.spawn(speed, time, position, direction, accuracy, raycast_groups, fac
 
     - [***raycast_groups***] `hash table` (**Optional**) The Collision Groups the Bullet ray cast can collide with. `nil` to disable ray casting.
 
-    - [***factory***] `string` (**Optional**) The URL string of the Factory component used to spawn the Bullet GameObject. Default is the Bullet Factory.
+    - [***factory***] `string` (**Optional**) The URL string of the Factory component used to spawn the Bullet GameObject. Default is the BulletFold Factory.
 
     - [***hit_response***] `function` (**Optional**) The function called when the Bullet hits an object. Default calls the Bullet Hit Marker function and deletes the Bullet.
 
@@ -130,7 +130,7 @@ bulletfold.spawn_update(speed, time, position, direction, accuracy, raycast_grou
 
     - [***raycast_groups***] `hash table` (**Optional**) The Collision Groups the Bullet ray cast can collide with. `nil` to disable ray casting.
 
-    - [***factory***] `string` (**Optional**) The URL string of the Factory component used to spawn the Bullet GameObject. Default is the Bullet Factory.
+    - [***factory***] `string` (**Optional**) The URL string of the Factory component used to spawn the Bullet GameObject. Default is the BulletFold Factory.
 
     - [***hit_response***] `function` (**Optional**) The function called when the Bullet hits an object. Default calls the Bullet Hit Marker function and deletes the Bullet.
 
