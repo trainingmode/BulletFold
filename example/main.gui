@@ -1,7 +1,7 @@
 script: "/example/main.gui_script"
 fonts {
   name: "system_font"
-  font: "/example/system_font.font"
+  font: "/example/gfx/system_font.font"
 }
 background_color {
   x: 0.0
