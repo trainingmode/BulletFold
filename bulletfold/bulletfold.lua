@@ -353,7 +353,7 @@ function bulletfold.clear() for bullet_id, bullet in pairs(bulletfold.bullets) d
 --
 function bulletfold.accuracy(direction, accuracy)
 	accuracy = spread(accuracy)
-	bullet_rotation_sin, bullet_rotation_cos, math.sin(accuracy), math.cos(accuracy)
+	bullet_rotation_sin, bullet_rotation_cos = math.sin(accuracy), math.cos(accuracy)
 	return vector3(direction.x * bullet_rotation_cos - direction.y * bullet_rotation_sin, direction.x * bullet_rotation_sin + direction.y * bullet_rotation_cos, direction.z)
 end
 
