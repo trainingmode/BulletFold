@@ -81,7 +81,7 @@ local bulletfold = require "bulletfold_directory.bulletfold"
 ### *Spawn*
 
 ```lua
-bulletfold.spawn(speed, time, position, direction, accuracy, raycast_groups, hit_response)
+bulletfold.spawn(speed, time, position, direction, accuracy, raycast_groups, factory, hit_response)
 ```
 
 - Spawn a Bullet updated using [**go.animate()**] (*Best Performance*):
@@ -109,7 +109,7 @@ bulletfold.spawn(speed, time, position, direction, accuracy, raycast_groups, hit
     - [***bullet_id***] `hash` The Bullet GameObject ID.
 
 ```lua
-bulletfold.spawn_update(speed, time, position, direction, accuracy, raycast_groups, hit_response)
+bulletfold.spawn_update(speed, time, position, direction, accuracy, raycast_groups, factory, hit_response)
 ```
 
 - Spawn a Bullet updated using [**go.set()**] (*Slower, Full Control Over Movement*):
