@@ -14,7 +14,7 @@
 
 - Per Bullet ray casting and Collision Groups.
 
-- Per Bullet hit functions and hit marker functions.
+- Per Bullet hit response functions and hit marker functions.
 
 - Per Bullet update behaviour.
 
@@ -42,7 +42,7 @@ Please see the **[quick_start.script_snippet](quick_start.script_snippet)** for 
 
 - **Bullets**: Create a GameObject named "*bullets*" and create a Factory component named "*factory*" within the GameObject.
 
-- **Hit Marker**s: Create a GameObject named "*hit_marker*" and create a Factory component named "*factory*" within the GameObject.
+- **Hit Markers**: Create a GameObject named "*hit_markers*" and create a Factory component named "*factory*" within the GameObject.
 
 ### *Module*
 
@@ -80,17 +80,17 @@ local bulletfold = require "bulletfold_directory.bulletfold"
 
 ### *Spawn*
 
+```lua
+bulletfold.spawn(speed, time, position, direction, accuracy, raycast_groups, hit_response)
+```
+
 - Spawn a Bullet updated using [**go.animate()**] (*Best Performance*):
 
-    ```lua
-    bulletfold.spawn(speed, time, position, direction, accuracy, raycast_groups, hit_function)
-    ```
-
     *Parameters*
 
     - [***speed***] `double` The Bullet speed.
 
-    - [***time***] `double` The Bullet life time.
+    - [***time***] `double` The Bullet life time, in seconds.
 
     - [***position***] `vmath.vector3` The Bullet spawn position.
 
@@ -98,25 +98,27 @@ local bulletfold = require "bulletfold_directory.bulletfold"
 
     - [***accuracy***] `double` The Bullet accuracy, used to randomize the direction. 0 for perfect accuracy.
 
-    - [***raycast_groups***] `hash table` The Collision Groups the Bullet ray cast can collide with. `bulletfold.raycast_groups` *or* `{ hash("col_group1") }`.
+    - [***raycast_groups***] `hash table` (**Optional**) The Collision Groups the Bullet ray cast can collide with. `nil` to disable ray casting.
 
-    - [***hit_function***] `function` (**Optional**) The function called when the Bullet hits an object. Default calls the Bullet Hit Marker function and deletes the Bullet.
+    - [***factory***] `string` (**Optional**) The URL string of the Factory component used to spawn the Bullet GameObject. Default is the Bullet Factory.
+
+    - [***hit_response***] `function` (**Optional**) The function called when the Bullet hits an object. Default calls the Bullet Hit Marker function and deletes the Bullet.
 
     *Returns*
 
     - [***bullet_id***] `hash` The Bullet GameObject ID.
 
-- Spawn a Bullet updated using [**go.set()**] (*Slow*):
+```lua
+bulletfold.spawn_update(speed, time, position, direction, accuracy, raycast_groups, hit_response)
+```
 
-    ```lua
-    bulletfold.spawn_update(speed, time, position, direction, accuracy, raycast_groups, hit_function)
-    ```
+- Spawn a Bullet updated using [**go.set()**] (*Slower, Full Control Over Movement*):
 
     *Parameters*
 
     - [***speed***] `double` The Bullet speed.
 
-    - [***time***] `double` The Bullet life time.
+    - [***time***] `double` The Bullet life time, in seconds.
 
     - [***position***] `vmath.vector3` The Bullet spawn position.
 
@@ -124,51 +126,67 @@ local bulletfold = require "bulletfold_directory.bulletfold"
 
     - [***accuracy***] `double` The Bullet accuracy, used to randomize the direction. 0 for perfect accuracy.
 
-    - [***raycast_groups***] `hash table` The Collision Groups the Bullet ray cast can collide with. `bulletfold.raycast_groups` *or* `{ hash("col_group1") }`.
+    - [***raycast_groups***] `hash table` (**Optional**) The Collision Groups the Bullet ray cast can collide with. `nil` to disable ray casting.
 
-    - [***hit_function***] `function` (**Optional**) The function called when the Bullet hits an object. Default calls the Bullet Hit Marker function and deletes the Bullet.
+    - [***factory***] `string` (**Optional**) The URL string of the Factory component used to spawn the Bullet GameObject. Default is the Bullet Factory.
+
+    - [***hit_response***] `function` (**Optional**) The function called when the Bullet hits an object. Default calls the Bullet Hit Marker function and deletes the Bullet.
 
     *Returns*
 
     - [***bullet_id***] `hash` The Bullet GameObject ID.
 
-- Custom Hit Functions:
+```lua
+hit_response = function(bullet_id, result) hitmarker(result.position) ; bulletfold.delete(bullet_id) end
+```
 
-    ```lua
-    hit_function = function(position, bullet_id, object_id) hitmarker(position) ; bulletfold.delete(bullet_id) end
-    ```
+- Custom Bullet hit response function:
 
     *Parameters*
 
-    - [***position***] `vmath.vector3` The Bullet collision position.
-
     - [***bullet_id***] `hash` The Bullet GameObject ID.
 
-    - [***object_id***] `hash` The ID of the GameObject the Bullet collided with.
+    - [***result***] `table` The result of the Bullet ray cast collision.
+
+        - [***normal***] `vmath.vector3` The surface normal of the Collision Object the Bullet collided with.
+
+        - [***fraction***] `double` The fraction along the ray cast where the collision occured. 0 is the start, 1 is the end.
+
+        - [***position***] `vmath.vector3` The collision position.
+
+        - [***group***] `hash` The Collision Group ID of the Collision Object.
+
+        - [***id***] `hash` The ID of the GameObject the Bullet collided with.
 
 ### *Update*
 
+```lua
+bulletfold.update(dt)
+```
+
 - Updates the BulletFold buffer.
 
- ```lua
- bulletfold.update(dt)
- ```
+    *Parameters*
 
-*Parameters*
-
-- [***dt***] `double` The time elapsed since the previous frame.
+    - [***dt***] `double` The time elapsed since the previous frame.
 
 ### *Delete*
-
-- Deletes a Bullet and removes it from the BulletFold buffer.
 
 ```lua
 bulletfold.delete(bullet_id)
 ```
 
-*Parameters*
+- Deletes a Bullet and removes it from the BulletFold buffer.
 
-- [***bullet_id***] `hash` The Bullet GameObject ID.
+    *Parameters*
+
+    - [***bullet_id***] `hash` The Bullet GameObject ID.
+
+```lua
+bulletfold.clear()
+```
+
+- Deletes every Bullet from the BulletFold buffer.
 
 -----
 
