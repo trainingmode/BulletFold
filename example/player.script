@@ -13,7 +13,6 @@ go.property("bullet_burst", 17) --6
 go.property("bullet_raycast", true)
 go.property("bullet_hitmarker", true)
 go.property("bullet_count_max", 2000) -- Maximum Amount of Bullets Spawnable Before Hitting Max Engine Counts (Remove Once Optimized per Use Case)
---go.property("bullet_spawn_anim", true) -- (Unused) Spawn Bullets Updated Using [go.animate()], False to Spawn Bullets Updated Using [go.set()] (Significantly Slower)
 
 go.property("gui_update", true)
 go.property("profiler_enabled", false)
@@ -30,11 +29,9 @@ __ctrl.key_right = hash("key_d")
 __ctrl.key_up = hash("key_w")
 __ctrl.key_down = hash("key_s")
 -- Debug Key IDs
-__ctrl.debug_fullupdate = hash("key_fullupdate")
 __ctrl.debug_raycast = hash("key_raycast")
 __ctrl.debug_hitmark = hash("key_hitmark")
 __ctrl.debug_oldlib = hash("key_oldlib")
-__ctrl.debug_rtgui = hash("key_rtgui")
 __ctrl.debug_profiler = hash("key_profiler")
 
 -- Internal Messaging
@@ -43,12 +40,14 @@ local __msg = {}
 __msg.id_self = "."
 __msg.id_self_go = ""
 __msg.id_sprite = "sprite"
-__msg.id_hitmarkers = "/hit_marker#factory"
+__msg.id_hitmarkers = "/hit_markers#factory"
 __msg.id_bulletfold_gui = "/gui#main"
+__msg.id_hitbox_square_go = "hit_box_square"
+__msg.id_hitbox_diamond_go = "hit_box_diamond"
+__msg.id_hitbox_round_go = "hit_box_round"
 -- Outgoing Message IDs
 __msg.out_acquire_input_focus = "acquire_input_focus"
 __msg.out_object_hit = "object_hit"
-__msg.out_set_text = "set_text_node"
 __msg.out_raycasting = "raycasting"
 __msg.out_hitmarking = "hitmarking"
 __msg.out_profiling = "profiling"
@@ -60,7 +59,19 @@ __msg.prop_tintalpha = "tint.w"
 --
 -- Update the Player GameObject.
 --
-local function player_update(self) end
+local function player_update(self)
+	if self.moving then
+		self.moving = false
+	end
+end
+
+--
+-- Ricochet a Bullet GameObject.
+--
+local function ricochet_bullet(bullet_id, result)
+	local bullet = bulletfold.bullets[bullet_id]
+	print("Ricochet "..bullet_id.." traveling ("..bullet.direction.x..", "..bullet.direction.y..")")
+end
 
 ----------------------------------------------------------------------------------------------------
 -- Script
@@ -72,6 +83,11 @@ local function player_update(self) end
 function init(self)
 	msg.post(__msg.id_self, __msg.out_acquire_input_focus)
 	profiler.enable_ui(self.profiler_enabled)
+	
+	-- Initialize the Internal Target Hit Box IDs
+	__msg.id_hitbox_square_go = go.get_id(__msg.id_hitbox_square_go)
+	__msg.id_hitbox_diamond_go = go.get_id(__msg.id_hitbox_diamond_go)
+	__msg.id_hitbox_round_go = go.get_id(__msg.id_hitbox_round_go)
 
 	-- Initialize the Player
 	__msg.id_self_go = go.get_id()
@@ -81,7 +97,12 @@ function init(self)
 	self.reticle = vmath.vector3()
 	self.moving = false
 	self.aiming = false
-	self.firing = false	
+	self.firing = false
+
+	----------------------------------------------------------------------------------------------------
+	-- Custom Bullet Factories
+	self.bullet_factory = "/bullets#factory"
+	self.bullet_factory2 = "/bullets#factory2"
 
 	-- Custom Hit Marker Behaviour
 	self.hitmarker = function(position, bullet_id, object_id)
@@ -90,11 +111,12 @@ function init(self)
 		go.animate(msg.url(nil, hitmark_id, __msg.id_sprite), __msg.prop_tintalpha, go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_LINEAR, 0.2, 0, function(self, url, property) go.delete(hitmark_id) end)
 		-- Increase the GUI Hit Score Text
 		msg.post(__msg.id_bulletfold_gui, __msg.out_object_hit, { object_id = object_id, position = position })
-	end 
+	end
 
 	-- Initialize BulletFold
-	bulletfold.raycast_groups = { hash("default") --[[, hash("collision_group2")]] } -- Default BulletFold Collision Group IDs
+	bulletfold.factory = self.bullet_factory -- Default BulletFold Factory
 	bulletfold.hitmarker = self.hitmarker -- Default BulletFold Hit Marker
+	bulletfold.raycast_groups = { hash("default") --[[, hash("collision_group2")]] } -- Default BulletFold Collision Group IDs
 end
 
 --
@@ -141,35 +163,33 @@ function on_input(self, action_id, action)
 		go.set(__msg.id_self_go, __msg.prop_rotation, vmath.quat_rotation_z(math.atan2(self.aim.y, self.aim.x))) end
 
 	----------------------------------------------------------------------------------------------------
-	-- Burst Firing Bullets
+	-- Burst Firing Bullets, Updated with [go.animate()] (Best Perfomance)
 	if action_id == __ctrl.click_l and bulletfold.bullet_count < self.bullet_count_max then
 		self.firing = true
 		-- Burst Spawn New BulletFold Bullets with Random Speeds
 		for i=1,self.bullet_burst do
-			bulletfold.spawn(self.bullet_speed + math.random(100)
-							, self.bullet_life_time
-							, vmath.vector3(self.position.x, self.position.y, math.random(100) * -0.0001)
-							, self.aim
-							, self.bullet_accuracy
-							, self.bullet_raycast and bulletfold.raycast_groups or nil
-							--[[, self.bullet_anim_update]]) end
-	-- Firing a Single Bullets
+			bulletfold.spawn(self.bullet_speed + math.random(100) -- Bullet Speed
+							, self.bullet_life_time -- Bullet Life Time
+							, vmath.vector3(self.position.x, self.position.y, math.random(100) * -0.0001) -- Bullet Spawn Position, Randomize Z-Order Below the Player Object
+							, self.aim -- Bullet Travel Direction
+							, self.bullet_accuracy -- Bullet Travel Direction Offset Threshold
+							, self.bullet_raycast and bulletfold.raycast_groups or nil) end -- Bullet Ray Cast Collision Groups
+	----------------------------------------------------------------------------------------------------
+	-- Firing a Single Bullet, Updated with [go.set()] (Slower, More Control Over the Bullet Movement)
 	elseif action_id == __ctrl.click_r and action.pressed and bulletfold.bullet_count < self.bullet_count_max then
 		self.firing = true
 		-- Spawn a Single New BulletFold Bullet
-		bulletfold.spawn(self.bullet_speed, self.bullet_life_time, vmath.vector3(self.position.x, self.position.y, math.random(100) * -0.0001)
-						, self.aim, 0, self.bullet_raycast and bulletfold.raycast_groups or nil --[[, self.bullet_anim_update]])
-	
-	----------------------------------------------------------------------------------------------------
-	-- Moving the Guy
-	elseif action_id == __ctrl.key_up then
-		self.direction.y = 1 ; self.moving = true
-	elseif action_id == __ctrl.key_down then
-		self.direction.y = -1 ; self.moving = true
-	elseif action_id == __ctrl.key_left then
-		self.direction.x = -1 ; self.moving = true
-	elseif action_id == __ctrl.key_right then
-		self.direction.x = 1 ; self.moving = true
+		bulletfold.spawn_update(self.bullet_speed, self.bullet_life_time, vmath.vector3(self.position.x, self.position.y, -0.0001), self.aim, 0, self.bullet_raycast and bulletfold.raycast_groups or nil
+						-- Custom Bullet Factory
+						, self.bullet_factory2
+						-- Custom Bullet Hit Response Function
+						, function(bullet_id, result)
+							self.hitmarker(result.position, bullet_id, result.id)
+							if result.id == __msg.id_hitbox_round_go then
+								bulletfold.delete(bullet_id)
+							else
+								ricochet_bullet(bullet_id, result) end
+						end)
 	
 	----------------------------------------------------------------------------------------------------
 	-- Bullet Ray Casts
@@ -190,6 +210,17 @@ function on_input(self, action_id, action)
 		if self.bullet_burst ~= 6 then self.bullet_burst = 6 ; self.bullet_accuracy = 0.00025
 		-- Set the New BulletFold Example Parameters
 		else self.bullet_burst = 20 ; self.bullet_accuracy = 0.001 end
+	
+	----------------------------------------------------------------------------------------------------
+	-- Moving the Player
+	elseif action_id == __ctrl.key_up then
+		self.direction.y = 1 ; self.moving = true 
+	elseif action_id == __ctrl.key_down then
+		self.direction.y = -1 ; self.moving = true
+	elseif action_id == __ctrl.key_left then
+		self.direction.x = -1 ; self.moving = true
+	elseif action_id == __ctrl.key_right then
+		self.direction.x = 1 ; self.moving = true
 
 	----------------------------------------------------------------------------------------------------
 	-- Profiler
