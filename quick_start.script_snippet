@@ -22,6 +22,6 @@ end
 function on_input(self, action_id, action)
     -- Spawn a Bullet
     if action_id == hash("fire_bullet") then
-        bulletfold.spawn(400, 2, self.position, self.aim, self.accuracy, { hash("enemies") , hash("walls") }, self.bullet_hit)        
+        bulletfold.spawn(400, 2, self.position, self.aim, self.accuracy, { hash("enemies") , hash("walls") }, "bullets#factory", self.bullet_hit)
     end
 end
