@@ -82,31 +82,33 @@ local bulletfold = require "bulletfold_directory.bulletfold"
 
 ### *Spawn*
 
-```lua
-bullet_id = bulletfold.spawn(speed, time, position, direction, accuracy, [raycast_groups], [factory], [hit_response])
-```
-
 - Spawn a Bullet updated using [**go.animate()**] (*Best Performance*):
 
-```lua
-bullet_id = bulletfold.spawn_update(speed, time, position, direction, accuracy, [raycast_groups], [factory], [hit_response])
-```
+    ```lua
+    bullet_id = bulletfold.spawn(speed, time, position, direction, accuracy, [raycast_groups], [factory], [hit_response])
+    ```
 
 - Spawn a Bullet updated using [**go.set()**] (*Slower, Full Control Over Movement*):
 
-```lua
-hit_response = function(bullet_id, result) hitmarker(result.position) ; bulletfold.delete(bullet_id) end
-```
+    ```lua
+    bullet_id = bulletfold.spawn_update(speed, time, position, direction, accuracy, [raycast_groups], [factory], [hit_response])
+    ```
 
 - Custom Bullet hit response function:
 
+    ```lua
+    hit_response = function(bullet_id, result) hitmarker(result.position) ; bulletfold.delete(bullet_id) end
+    ```
+
 ### *Update*
 
-```lua
-bulletfold.update(dt)
-```
+- Update the BulletFold buffer:
 
-- Updates the BulletFold buffer.
+    ```lua
+    function update(self, dt)
+        bulletfold.update(dt)
+    end
+    ```
 
 -----
 
