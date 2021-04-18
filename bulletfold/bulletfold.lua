@@ -213,8 +213,8 @@ local function update_bullet_full(bullet, bullet_id, dt)
 	if 0 < bullet.time then
 		-- Update the Bullet Position
 		bullet_position_old = bullet.position
-		--bullet.position = bullet.position + bullet.direction * bullet.speed * dt
-		bullet.position = bullet.position + bullet.velocity * dt
+		bullet.position = bullet.position + bullet.direction * bullet.speed * dt
+		--bullet.position = bullet.position + bullet.velocity * dt
 		go.set(bullet_id, __msg.prop_position, bullet.position)
 
 	-- Delete the Bullet if the Life Timer has Concluded
