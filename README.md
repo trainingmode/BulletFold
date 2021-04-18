@@ -175,7 +175,7 @@ local bulletfold = require "bulletfold_directory.bulletfold"
     end 
     ```
 
-### *Spawn*
+### *Spawn Functions*
 
 ## bulletfold.spawn(speed, time, position, direction, accuracy, [raycast_groups], [factory], [hit_response])
 
@@ -269,7 +269,7 @@ local bulletfold = require "bulletfold_directory.bulletfold"
     bullet_id = bulletfold.spawn_update(speed, time, position, direction, accuracy, [raycast_groups], [factory], [hit_response])
     ```
 
-### *Update*
+### *Update Functions*
 
 ## bulletfold.update(dt)
 
@@ -279,7 +279,7 @@ local bulletfold = require "bulletfold_directory.bulletfold"
 
     - [***dt***] `double` The time elapsed since the previous frame.
 
-### *Delete*
+### *Delete Functions*
 
 ## bulletfold.delete(bullet_id)
 
